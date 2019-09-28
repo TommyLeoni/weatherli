@@ -1,0 +1,32 @@
+{
+  "name": "@tommyleoni/weatherli",
+  "version": "1.0.0",
+  "description": "A CLI to get the latest weather info",
+  "main": "src/cli.js",
+  "bin": "bin/weatherli",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TommyLeoni/weatherli.git"
+  },
+  "keywords": [
+    "cli",
+    "weather"
+  ],
+  "author": "Tomaso Leoni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TommyLeoni/weatherli/issues"
+  },
+  "homepage": "https://github.com/TommyLeoni/weatherli#readme",
+  "dependencies": {
+    "arg": "^4.1.1",
+    "esm": "^3.2.25",
+    "inquirer": "^7.0.0"
+  }
+}

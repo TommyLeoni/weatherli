@@ -1,30 +1,70 @@
 import arg from "arg";
+import inquirer from "inquirer";
+import { getWeatherInfo } from "./main";
 
 function parseArgsIntoOptions(rawArgs) {
   const args = arg(
     {
-      "--auto": Boolean,
       "--city": String,
-      "--fahrenheit": Boolean,
-      "--days": Number,
-      "-a": "--auto",
+      "--units": String,
+      "--forecast": String,
       "-c": "--city",
-      "-f": "--fahrenheit",
-      "-d": "--days"
+      "-u": "--units",
+      "-f": "--forecast"
     },
     {
       argv: rawArgs.slice(2)
     }
   );
   return {
-    getLocation: args['--auto'] || false,
-    city: args['--city'] || null,
-    fahrenheit: args['--fahrenheit'] || false,
-    forecast: args['--days'] || 1
+    city: args["--city"] || false,
+    units: args["--units"] || false,
+    forecast: args["--forecast"] || false
   };
 }
 
-export function cli(args) {
+async function promptForMissingOptions(options) {
+  const prompts = [];
+  if (!options.city) {
+    prompts.push({
+      type: "input",
+      name: "city",
+      message: `What city's weather information would you like?`,
+      when: options.city !== null,
+      default: null
+    });
+  }
+
+  if (!options.units) {
+    prompts.push({
+      type: "list",
+      name: "units",
+      message: `Do you prefer fahrenheit or celsius read outs?`,
+      choices: ["Fahrenheit", "Celsius", "Kelvin (in case you're feeling super smart today)"],
+      default: "Celsius"
+    });
+  }
+
+  if (!options.forecast) {
+    prompts.push({
+      type: "number",
+      name: "forecast",
+      message: `How many days would you like to have information on? (15 max)`,
+      default: 1
+    });
+  }
+  const answers = await inquirer.prompt(prompts);
+
+  return {
+    ...options,
+    city: options.city || answers.city,
+    units: options.units || answers.units,
+    forecast: options.forecast || answers.forecast
+  };
+}
+
+export async function cli(args) {
   let options = parseArgsIntoOptions(args);
-  console.log(options);
+  options = await promptForMissingOptions(options);
+  getWeatherInfo(options);
 }

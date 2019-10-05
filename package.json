@@ -26,7 +26,12 @@
   "homepage": "https://github.com/TommyLeoni/weatherli#readme",
   "dependencies": {
     "arg": "^4.1.1",
+    "axios": "^0.19.0",
+    "chalk": "^2.4.2",
     "esm": "^3.2.25",
-    "inquirer": "^7.0.0"
+    "inquirer": "^7.0.0",
+    "ncp": "^2.0.0",
+    "rxjs": "^6.5.3",
+    "stringinject": "^2.1.1"
   }
 }

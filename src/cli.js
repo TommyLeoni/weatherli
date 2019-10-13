@@ -40,8 +40,12 @@ async function promptForMissingOptions(options) {
       type: "list",
       name: "units",
       message: `Do you prefer fahrenheit or celsius read outs?`,
-      choices: ["Fahrenheit", "Celsius", "Kelvin (in case you're feeling super smart today)"],
-      default: "Celsius"
+      choices: [
+        "Metric",
+        "Imperial",
+        "Kelvin"
+      ],
+      default: "Metric"
     });
   }
 
@@ -49,10 +53,11 @@ async function promptForMissingOptions(options) {
     prompts.push({
       type: "number",
       name: "forecast",
-      message: `How many days would you like to have information on? (15 max)`,
-      default: 1
+      message: `How many days would you like to have information on? \n (15 max, 0 for the current conditions)`,
+      default: 0
     });
   }
+
   const answers = await inquirer.prompt(prompts);
 
   return {

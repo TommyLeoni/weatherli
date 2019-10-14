@@ -18,7 +18,7 @@ export class API {
       {
         cityName: city,
         apiKey: this.apiKey,
-        units: String(units).toLowerCase()
+        units: units == "Kelvin" ? "" : String(units).toLowerCase()
       }
     );
 

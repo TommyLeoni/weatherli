@@ -6,23 +6,23 @@ export function currCoditionsOutput(response, units) {
   output.push(
     chalk.bold(
       "Current coditions in " +
-        response.data.name +
-        ", " +
-        response.data.sys.country +
-        ":\n"
+      response.data.name +
+      ", " +
+      response.data.sys.country +
+      ":\n"
     )
   );
   output.push(
     "Average temperature of " +
-      tempToColour(response.data.weather[0].icon, response.data.main.temp) +
-      (units == "Metric"
-        ? " Celsius"
-        : units == "Imperial"
+    tempToColour(response.data.main.temp, units) +
+    (units == "metric"
+      ? " Celsius"
+      : units == "imperial"
         ? " Fahrenheit"
         : " Kelvin") +
-      " with a humidity of " +
-      response.data.main.humidity +
-      " percent"
+    " with a humidity of " +
+    response.data.main.humidity +
+    " percent"
   );
 
   output.forEach(line => {
@@ -30,13 +30,34 @@ export function currCoditionsOutput(response, units) {
   });
 }
 
-export function forecastOutput(response, units) {}
+export function forecastOutput(response, units) { }
 
-function tempToColour(icon, temp) {
-  let hexDigits = icon.split("");
-  return chalk.rgb(
-    temp * 4 - 40 > 255 ? 255 : temp * 4 - 40 < 0 ? 0 : Math.round(temp * 4 - 40),
-    22,
-    22
-  )(temp);
+function tempToColour(temp, units) {
+  if (units == "metric") {
+    if (temp < 0) {
+      return chalk.blue(temp);
+    } else if (temp < 20) {
+      return chalk.greenBright(temp);
+    } else if (temp < 30) {
+      return chalk.rgb(255, 165, 0)(temp);
+    } else return chalk.red(temp);
+  } else if (units == "imperial") {
+    if (temp < 32) {
+      return chalk.blue(temp);
+    } else if (temp < 70) {
+      return chalk.greenBright(temp);
+    } else if (temp < 90) {
+      return chalk.rgb(255, 165, 0)(temp);
+    } else return chalk.red(temp);
+  } else if (units == "kelvin") {
+    if (temp < 273.15) {
+      return chalk.blue(temp);
+    } else if (temp < 293.15) {
+      return chalk.greenBright(temp);
+    } else if (temp < 303.15) {
+      return chalk.rgb(255, 165, 0)(temp);
+    } else return chalk.red(temp);
+  } else {
+    console.log("-- invalid units --")
+  }
 }

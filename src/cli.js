@@ -41,11 +41,11 @@ async function promptForMissingOptions(options) {
       name: "units",
       message: `Do you prefer fahrenheit or celsius read outs?`,
       choices: [
-        "Metric",
-        "Imperial",
-        "Kelvin"
+        {name: "Metric", value: "metric"},
+        {name: "Imperial", value: "imperial"},
+        {name: "Kelvin", value: "kelvin"}
       ],
-      default: "Metric"
+      default: "metric"
     });
   }
 

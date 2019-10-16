@@ -1,10 +1,6 @@
 import axios from "axios";
 import stringInject from "stringinject";
 import key from "./key";
-import emoji from "node-emoji";
-import flags from "emoji-flags";
-import chalk from "chalk";
-import { TemperatureBlock } from "./components/temperatureBlock";
 import { currCoditionsOutput, forecastOutput } from "./output";
 
 export class API {
@@ -23,24 +19,6 @@ export class API {
     );
 
     currCoditionsOutput(await axios.get(reqUrl), units);
-
-    /*const response = await axios.get(reqUrl);
-    const output = [];
-    output.push(emoji.get("flag-" + response.data.sys.country.toLowerCase()));
-    output.push(
-      TemperatureBlock(
-        response.data.main.temp,
-        units,
-        response.data.main.humidity
-      )
-    );
-
-    output.forEach(line => {
-      console.log(line);
-    });
-
-    //console.log(response.data.main);
-    //console.log(response.data); */
   }
 
   async forecast(city, units, days) {
@@ -55,12 +33,5 @@ export class API {
     );
 
     forecastOutput(await axios.get(reqUrl), units);
-
-    /* const response = await axios.get(reqUrl);
-
-    for (var i = 0; i < days; i++) {
-      console.log(response.data.list[i].main);
-    }
-    console.log(response.data); */
   }
 }
